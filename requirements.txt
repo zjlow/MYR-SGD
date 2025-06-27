@@ -5,5 +5,5 @@ pandas
 plotly
 nbformat
 requests
-MechanicalSoup
-selenium
+# MechanicalSoup
+# selenium
