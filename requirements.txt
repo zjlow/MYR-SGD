@@ -1,0 +1,10 @@
+ipykernel
+ipywidgets
+numpy
+pandas
+plotly
+nbformat
+requests
+MechanicalSoup
+# python-dotenv==1.1.0
+# scipy==1.15.2
