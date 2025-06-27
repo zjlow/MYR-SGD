@@ -49,11 +49,23 @@ def get_wise_rate(sgd_amount):
 
 def get_results(sgd_amount):
     time = get_time()
-    ratios = {'utc_time': time, 'sgd_amount': sgd_amount}
-    mastercard_rate = get_mastercard_rate(sgd_amount)
-    wise_rate = get_wise_rate(sgd_amount)
-    ratios.update(mastercard_rate)
-    ratios.update(wise_rate)
 
-    df = pd.DataFrame({k: [v] for k, v in ratios.items()})
+    def get_single_amount(amt):
+        rates = dict()
+        rates.update(get_mastercard_rate(amt))
+        rates.update(get_wise_rate(amt))
+        rates = tuple(rates.items())
+        rates_df = pd.DataFrame.from_records(rates, columns=['converter', 'rate'])
+        rates_df['sgd_amount'] = amt
+        return rates_df
+
+    if not isinstance(sgd_amount, list):
+        df = get_single_amount(sgd_amount)
+        df['utc_time'] = time
+
+    elif isinstance(sgd_amount, list):
+        df = [get_single_amount(amt) for amt in sgd_amount]
+        df = pd.concat(df, ignore_index=True)
+
+    df['utc_time'] = time
     return df
