@@ -7,5 +7,3 @@ nbformat
 requests
 MechanicalSoup
 selenium
-# python-dotenv==1.1.0
-# scipy==1.15.2
