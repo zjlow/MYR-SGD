@@ -32,4 +32,4 @@ jobs:
         run: ls -lR
       # Run script
       - name: Fetch currency data and saves it
-        run: python /scripts/retrieve_data.py
+        run: python scripts/retrieve_data.py
