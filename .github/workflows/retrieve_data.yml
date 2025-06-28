@@ -15,7 +15,7 @@ jobs:
     steps:
       # The first step is to check out the repository so it can read the files inside of it and do other operations
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: zjlow/MYR-SGD@main
       # This step installs Python
       - name: Set up Python 3.11.7
         uses: actions/setup-python@v4
@@ -27,6 +27,9 @@ jobs:
       # Print working directory (for later troubleshooting)
       - name: Print working directory
         run: pwd
+      # Print all files and folders
+      - name: Print all files and folders
+        run: ls -lR
       # Run script
       - name: Fetch currency data and saves it
         run: python /scripts/retrieve_data.py
