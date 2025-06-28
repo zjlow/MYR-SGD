@@ -33,3 +33,13 @@ jobs:
       # Run script
       - name: Fetch currency data and saves it
         run: python scripts/retrieve_data.py
+      # Print all files and folders
+      - name: Print all files and folders
+        run: ls -lR
+      # Commit updated rates.csv file
+      - name: Commit updated rates.csv file
+        run: |
+          git add data/rates.csv;
+          git commit -m "Updated rates.csv";
+          git push;
+          done
