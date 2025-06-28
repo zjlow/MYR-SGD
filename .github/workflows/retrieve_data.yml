@@ -24,12 +24,6 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: pip install -r requirements.txt
-      # Print working directory (for later troubleshooting)
-      - name: Print working directory
-        run: pwd
-      # Print all files and folders
-      - name: Print all files and folders
-        run: ls -lR
       # Run script
       - name: Fetch currency data and saves it
         run: python scripts/retrieve_data.py
@@ -38,7 +32,12 @@ jobs:
         run: ls -lR
       # Commit updated rates.csv file
       - name: Commit updated rates.csv file
+        env:
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+          GIT_NAME: ${{ secrets.GIT_NAME }}
         run: |
+          git config --global user.email GIT_EMAIL;
+          git config --global user.name GIT_NAME;
           git add data/rates.csv;
           git commit -m "Updated rates.csv";
           git push;
