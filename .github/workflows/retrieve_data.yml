@@ -15,7 +15,7 @@ jobs:
     steps:
       # The first step is to check out the repository so it can read the files inside of it and do other operations
       - name: Check out repo
-        uses: zjlow/MYR-SGD@main
+        uses: actions/checkout@v4
       # This step installs Python
       - name: Set up Python 3.11.7
         uses: actions/setup-python@v4
