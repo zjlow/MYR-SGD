@@ -1,0 +1,32 @@
+name: Retrieve currency rate data
+
+on:
+  push:
+    paths:
+    - .github/workflows/retrieve_data.yml # Only run a new workflow every time this file (retrieve_data.yml) changes
+    branches: [ "main" ]
+  workflow_dispatch: # Required even though this is empty
+  schedule:
+    - cron: '*/30 * * * *' # Run this workflow every 30 minutes
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+      # The first step is to check out the repository so it can read the files inside of it and do other operations
+      - name: Check out repo
+        uses: actions/checkout@v4
+      # This step installs Python
+      - name: Set up Python 3.11.7
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11.7"
+      # Install dependencies
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      # Print working directory (for later troubleshooting)
+      - name: Print working directory
+        run: pwd
+      # Run script
+      - name: Fetch currency data and saves it
+        run: python zjlow/MYR-SGD/scripts/retrieve_data.py
