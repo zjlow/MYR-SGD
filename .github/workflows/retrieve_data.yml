@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
   workflow_dispatch: # Required even though this is empty
   schedule:
-    - cron: '*/30 * * * *' # Run this workflow every 30 minutes
+    - cron: '0,30 * * * *' # Run this workflow every 30 minutes
 
 jobs:
   scheduled:
