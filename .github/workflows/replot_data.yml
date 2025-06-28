@@ -1,0 +1,46 @@
+name: Retrieve currency rate data
+
+on:
+  push:
+    paths:
+    - .github/workflows/replot_data.yml # Only run a new workflow every time this file (replot_data.yml) changes
+    branches: [ "main" ]
+  workflow_dispatch: # Required even though this is empty
+  schedule:
+    - cron: '* */6 * * *' # Run this workflow every 6 hours
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+      # The first step is to check out the repository so it can read the files inside of it and do other operations
+      - name: Check out repo
+        uses: actions/checkout@v4
+      # This step installs Python
+      - name: Set up Python 3.11.7
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11.7"
+      # Install dependencies
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      # Print all files and folders
+      - name: Print all files and folders
+        run: ls -lR
+      # Re-run Jupyter notebook
+      - name: Re-run Jupyter notebook
+        run: jupyter nbconvert --execute --to notebook --inplace notebooks/plot_data.ipynb
+      # Print all files and folders
+      - name: Print all files and folders
+        run: ls -lR
+      # Commit updated rates.csv file
+      - name: Commit updated plot_data.ipynb
+        env:
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+          GIT_NAME: ${{ secrets.GIT_NAME }}
+        run: |
+          git config --global user.email GIT_EMAIL;
+          git config --global user.name GIT_NAME;
+          git add notebooks/plot_data.ipynb;
+          git commit -m "Updated plots";
+          git push
