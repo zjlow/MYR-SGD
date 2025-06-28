@@ -1,4 +1,4 @@
-name: Retrieve currency rate data
+name: Replot currency rate data
 
 on:
   push:
