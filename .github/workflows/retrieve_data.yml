@@ -40,5 +40,4 @@ jobs:
           git config --global user.name GIT_NAME;
           git add data/rates.csv;
           git commit -m "Updated rates.csv";
-          git push;
-          done
+          git push
