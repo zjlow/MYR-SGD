@@ -30,11 +30,14 @@ jobs:
       # Re-run Jupyter notebook
       - name: Re-run Jupyter notebook
         run: jupyter nbconvert --execute --to notebook --inplace notebooks/plot_data.ipynb
+      # Save new output as HTML
+      - name: Save Jupyter notebook as HTML
+        run: jupyter nbconvert notebooks/plot_data.ipynb --to html
       # Print all files and folders
       - name: Print all files and folders
         run: ls -lR
       # Commit updated rates.csv file
-      - name: Commit updated plot_data.ipynb
+      - name: Commit updated files
         env:
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
           GIT_NAME: ${{ secrets.GIT_NAME }}
@@ -42,5 +45,6 @@ jobs:
           git config --global user.email GIT_EMAIL;
           git config --global user.name GIT_NAME;
           git add notebooks/plot_data.ipynb;
+          git add notebooks/plot_data.html;
           git commit -m "Updated plots";
           git push
