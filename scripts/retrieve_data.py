@@ -2,7 +2,7 @@ import requests
 # from pprint import pprint
 from datetime import datetime, timezone
 import pandas as pd
-from os import path
+import os
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0'}
 
@@ -78,9 +78,13 @@ if __name__ == "__main__":
 
     df = get_results(sgd_amount)
 
-    outputpath = '../data/rates.csv'
+    datafolder = 'data/' 
+    if not os.path.exists(datafolder):
+        os.makedirs(datafolder)
+    
+    outputpath = 'data/rates.csv'
 
-    if path.exists(outputpath):
+    if os.path.exists(outputpath):
         df.to_csv(outputpath, mode='a', header=False, index=False)
         print('Appended!')
     else:
