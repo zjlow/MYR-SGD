@@ -4,6 +4,7 @@ numpy
 pandas
 plotly
 nbformat
+nbconvert
 requests
 # MechanicalSoup
 # selenium
