@@ -1,4 +1,4 @@
-name: Retrieve currency rate data
+name: Retrieve and replot currency rate data
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
   scheduled:
     runs-on: ubuntu-latest
     steps:
-      # The first step is to check out the repository so it can read the files inside of it and do other operations
+      # Check out the repository so it can read the files inside of it and do other operations
       - name: Check out repo
         uses: actions/checkout@v4
       # This step installs Python
@@ -27,11 +27,14 @@ jobs:
       # Run script
       - name: Fetch currency data and saves it
         run: python scripts/retrieve_data.py
-      # Print all files and folders
-      - name: Print all files and folders
-        run: ls -lR
+      # Re-run Jupyter notebook
+      - name: Re-run Jupyter notebook
+        run: jupyter nbconvert --execute --to notebook --inplace notebooks/plot_data.ipynb
+      # Save new output as HTML
+      - name: Save Jupyter notebook as HTML
+        run: jupyter nbconvert notebooks/plot_data.ipynb --to html
       # Commit updated rates.csv file
-      - name: Commit updated rates.csv file
+      - name: Commit updated files
         env:
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
           GIT_NAME: ${{ secrets.GIT_NAME }}
@@ -40,4 +43,7 @@ jobs:
           git config --global user.name GIT_NAME;
           git add data/rates.csv;
           git commit -m "Updated rates.csv";
+          git add notebooks/plot_data.ipynb;
+          git add notebooks/plot_data.html;
+          git commit -m "Updated plots";
           git push
