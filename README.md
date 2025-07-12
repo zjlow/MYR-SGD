@@ -5,5 +5,4 @@ This project is purely for personal reasons only, for me to track what is the be
 
 The data here is only for MYR to SGD, not for SGD to MYR.
 
-Data collection is currently automated by GitHub Actions (every 30 minutes).
-Data plotting is also automated by GitHub Actions (every 6 hours).
+Data collection and plotting are currently automated by GitHub Actions (every 30 minutes). 
